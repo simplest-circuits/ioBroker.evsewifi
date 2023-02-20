@@ -244,6 +244,18 @@ class Evsewifi extends utils.Adapter {
             native: {},
         });
 
+        await this.setObjectNotExistsAsync(paramtersFolderName+'numPhases', {
+            type: 'state',
+            common: {
+                name: 'numPhases',
+                type: 'number',
+                role: 'indicator',
+                read: true,
+                write: false,
+            },
+            native: {},
+        });
+
         for(var c=0; c < this.config.noLogsToShow; c++){
             await this.setObjectNotExistsAsync(logsFolderName+'Log_'+c, {
                 type: 'state',
@@ -469,6 +481,7 @@ class Evsewifi extends utils.Adapter {
                 self.setState(paramtersFolderName+'currentP2', parameterDataObj.list[0].currentP2, true)
                 self.setState(paramtersFolderName+'currentP3', parameterDataObj.list[0].currentP3, true)
                 self.setState(paramtersFolderName+'useMeter', parameterDataObj.list[0].useMeter, true)
+                self.setState(paramtersFolderName+'numPhases', parameterDataObj.list[0].numPhases, true)
               }
               else {
                 self.log.info("Check IP!")
