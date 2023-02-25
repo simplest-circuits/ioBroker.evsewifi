@@ -323,7 +323,7 @@ class Evsewifi extends utils.Adapter {
             common: {
                 name: 'interruptCp',
                 type: 'boolean',
-                role: 'indicator',
+                role: 'boolean',
                 read: true,
                 write: true,
             },
@@ -446,8 +446,8 @@ class Evsewifi extends utils.Adapter {
       })
     }
 
-    async interruptCp(){
-        const url = 'http://' + this.config.ip + '/interruptCp?interruptCp=true';
+    async interruptCp(intVal){
+        const url = 'http://' + this.config.ip + '/interruptCp?interruptCp='+intVal;
         const self = this;
         request({method: "GET", url}, function (error, response, result) {
             if(!error && response.statusCode == 200){
