@@ -323,8 +323,8 @@ class Evsewifi extends utils.Adapter {
             common: {
                 name: 'interruptCp',
                 type: 'boolean',
-                role: 'button',
-                read: false,
+                role: 'indicator',
+                read: true,
                 write: true,
             },
             native: {},
@@ -446,7 +446,7 @@ class Evsewifi extends utils.Adapter {
       })
     }
 
-    async doCpInterrupt(){
+    async interruptCp(){
         const url = 'http://' + this.config.ip + '/interruptCp?interruptCp=true';
         const self = this;
         request({method: "GET", url}, function (error, response, result) {
