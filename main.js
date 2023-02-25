@@ -513,7 +513,7 @@ class Evsewifi extends utils.Adapter {
                 self.setState(paramtersFolderName+'currentP3', parameterDataObj.list[0].currentP3, true)
                 self.setState(paramtersFolderName+'useMeter', parameterDataObj.list[0].useMeter, true)
                 self.setState(paramtersFolderName+'numPhases', parameterDataObj.list[0].numPhases, true)
-                self.setState(paramtersFolderName+'doCpInterrupt', parameterDataObj.list[0].doCpInterrupt, true)
+                self.setState(paramtersFolderName+'interruptCp', parameterDataObj.list[0].interruptCp, true)
               }
               else {
                 self.log.info("Check IP!")
