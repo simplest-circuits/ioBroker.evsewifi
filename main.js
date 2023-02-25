@@ -317,6 +317,18 @@ class Evsewifi extends utils.Adapter {
             },
             native: {},
         });
+
+        await this.setObjectNotExistsAsync('interruptCp', {
+            type: 'state',
+            common: {
+                name: 'interruptCp',
+                type: 'boolean',
+                role: 'button',
+                read: false,
+                write: true,
+            },
+            native: {},
+        });
     }
 
 
@@ -350,6 +362,9 @@ class Evsewifi extends utils.Adapter {
 			if(id == 'evsewifi.'+this.instance+'.setNumPhases'){
               this.setNumPhases(state.val);
             }
+            if(id == 'evsewifi.'+this.instance+'.interruptCp'){
+                this.interruptCp(state.val);
+              }
             if(id == 'evsewifi.'+this.instance+'.setStatus'){
               if(state.val == 'true' || state.val == 'false'){
                 this.setStatus(state.val);
@@ -431,6 +446,22 @@ class Evsewifi extends utils.Adapter {
       })
     }
 
+    async doCpInterrupt(){
+        const url = 'http://' + this.config.ip + '/interruptCp?interruptCp=true';
+        const self = this;
+        request({method: "GET", url}, function (error, response, result) {
+            if(!error && response.statusCode == 200){
+              if(result == 'S0_CP signal interrupted successfully'){
+              } else {
+                self.log.info('E0_Error while interrupting CP signal')
+              }
+            } else {
+              self.log.info("Check IP!")
+              //self.stop();
+            }
+        })
+      }
+
 //noLogsToShow
     async getLog(){
       var logsFolderName = 'logs.'
@@ -482,6 +513,7 @@ class Evsewifi extends utils.Adapter {
                 self.setState(paramtersFolderName+'currentP3', parameterDataObj.list[0].currentP3, true)
                 self.setState(paramtersFolderName+'useMeter', parameterDataObj.list[0].useMeter, true)
                 self.setState(paramtersFolderName+'numPhases', parameterDataObj.list[0].numPhases, true)
+                self.setState(paramtersFolderName+'doCpInterrupt', parameterDataObj.list[0].doCpInterrupt, true)
               }
               else {
                 self.log.info("Check IP!")
